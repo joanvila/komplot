@@ -21,7 +21,7 @@
         {
          "columns":2,
          "firstgid":1,
-         "image":"m_b.png",
+         "image":"komplot\/my_assets\/m_b.png",
          "imageheight":256,
          "imagewidth":256,
          "margin":0,
@@ -43,23 +43,23 @@
             {
              "0":
                 {
-                 "image":"ms.jpg"
+                 "image":"komplot\/my_assets\/ms.jpg"
                 },
              "1":
                 {
-                 "image":"background.jpg"
+                 "image":"komplot\/my_assets\/background.jpg"
                 },
              "2":
                 {
-                 "image":"ms256.jpg"
+                 "image":"komplot\/my_assets\/ms256.jpg"
                 },
              "3":
                 {
-                 "image":"floor.png"
+                 "image":"komplot\/my_assets\/floor.png"
                 },
              "4":
                 {
-                 "image":"ms512.png"
+                 "image":"komplot\/my_assets\/ms512.png"
                 }
             },
          "tilewidth":512
