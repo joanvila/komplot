@@ -25,7 +25,10 @@ var gameInProgress = false;
 
 // socket.io connections
 io.on('connection', function(socket) {
-
+	console.log('user connected');
+	socket.on('coin', function(data) {
+		console.log(data);
+	});
 });
 
 
