@@ -6,8 +6,6 @@ var path = require('path');
 var bodyParser = require('body-parser');
 var cors = require('cors');
 
-var app = express();
-
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
@@ -54,10 +52,10 @@ app.post('/addCoins/:userId', function(req, res, next) {
 	var coinPositoin = req.body.position;
 	console.log(coinPosition); // TODO: Validate this
 	coinsUsers[userId]++;
-	res.sendStatus(200);
+	res.sendStatus(200); 
 });
 
 
-app.listen(8080, function() {
-	console.log('We are listening on port 8080');
+http.listen(3000, function() {
+	console.log('We are listening on port 3000');
 });
