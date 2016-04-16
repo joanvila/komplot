@@ -5,7 +5,7 @@ function preload() {
     game.load.tilemap('test', 'level1.json', null, Phaser.Tilemap.TILED_JSON);
     game.load.image('tiles', 'my_assets/tileset2.png');
     game.load.spritesheet('coin', 'assets/sprites/coin.png', 32, 32);
-    game.load.image('player', 'my_assets/player.png');
+    game.load.image('player', 'my_assets/player.png'); 
 
 }
 

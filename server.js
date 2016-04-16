@@ -54,7 +54,7 @@ app.post('/addCoins/:userId', function(req, res, next) {
 	var coinPositoin = req.body.position;
 	console.log(coinPosition); // TODO: Validate this
 	coinsUsers[userId]++;
-	res.sendStatus(200);
+	res.sendStatus(200); 
 });
 
 
