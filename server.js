@@ -1,16 +1,35 @@
 var express = require('express');
+var app = express();
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
+var path = require('path');
 var bodyParser = require('body-parser');
+var cors = require('cors');
 
 var app = express();
 
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
+//app.use(express.static('public'));
 
-//puntuacio o algo random
+// initialization variables
 var coinsUsers = [];
 var coinsPositions = null;
 var gameInProgress = false;
 
+// main entrance point to serve the html
+/*app.get('/', function(req, res){
+  res.sendFile(path.join(__dirname+'/public/index.html'));
+});*/
+
+// socket.io connections
+io.on('connection', function(socket) {
+
+});
+
+
+// express routes
 app.get('/getId', function(req, res, next) {
 	var n = coinsUsers.length;
 	coinsUsers.push(0);
@@ -30,16 +49,12 @@ app.get('/startGame', function(req, res, next) {
 app.post('/addCoins/:userId', function(req, res, next) {
 	var userId = req.params.userId;
 	var coinPositoin = req.body.position;
-	console.log(coinPosition); // TODO: Validate this 
+	console.log(coinPosition); // TODO: Validate this
 	coinsUsers[userId]++;
 	res.sendStatus(200);
 });
 
 
-app.listen(3000, function() {
-	console.log('We are listening on port 3000');
+app.listen(8080, function() {
+	console.log('We are listening on port 8080');
 });
-
-function isGameFinished() {
-	var inProgress = true;
-}
