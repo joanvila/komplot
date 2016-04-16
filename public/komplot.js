@@ -15,7 +15,7 @@ var player;
 var cursors;
 var facing = 'left';
 var jumpTimer = 0;
-var coins;
+var coinGroup;
 
 function create() {
 
@@ -31,6 +31,9 @@ function create() {
     //  The first parameter is the tileset name, as specified in the Tiled map editor (and in the tilemap json file)
     //  The second parameter maps this name to the Phaser.Cache key 'tiles'
     map.addTilesetImage('tiles', 'tiles');
+    
+
+
 
     //map.setCollisionBetween(15, 16);
     //map.setCollisionBetween(20, 25);
@@ -50,13 +53,19 @@ function create() {
     //  This resizes the game world to match the layer dimensions
     layer.resizeWorld();
 
+    coinGroup = game.add.group();   
+    coinGroup.enableBody = true;     
+    coinGroup.create(100, 100, 'coin');
+    //map.createFromObjects('Tile Layer 1', 50, 'coin', 0, true, false, coinGroup);      
+    coinGroup.callAll('animations.add', 'animations', 'spin', [0, 1, 2, 3, 4, 5], 10, true);  
+    coinGroup.callAll('animations.play', 'animations', 'spin');
+
     player = game.add.sprite(32, 32, 'player');
     game.physics.enable(player, Phaser.Physics.ARCADE);
     player.body.bounce.y = 0.2;
     player.body.collideWorldBounds = true;
     player.body.setSize(16, 16, 8, 8);
 
-    coins = game.add.sprite(100, 100, 'coin');
 
     game.camera.follow(player);
 
@@ -71,6 +80,8 @@ var jumps = 0;
 function update() {
 
     game.physics.arcade.collide(player, layer);
+    game.physics.arcade.collide(coinGroup, layer); 
+    game.physics.arcade.overlap(player, coinGroup, collectCoin, null, this); 
 
     if (player.body.velocity.x > 0) {
         player.body.velocity.x /= 1.05;
@@ -125,5 +136,11 @@ function render () {
     // game.debug.text(game.time.physicsElapsed, 32, 32);
     game.debug.body(player);
     // game.debug.bodyInfo(player, 16, 24);
+
+}
+
+function collectCoin(player, coin) {
+
+    coin.kill();
 
 }
