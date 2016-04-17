@@ -20,7 +20,7 @@ var jumpTimer = 0;
 var coinGroup;
 var userId;
 
-var coins = [
+var coinCoords = [
     [4,2],[5,2],[6,2],[7,2],
     [2,5],[3,5],[4,5],[7,5],[8,5],
     [3,8],[5,8],[7,8],[9,8],
@@ -32,6 +32,7 @@ var coins = [
     [15,13],[17,12],[19,12],[21,13],
 
 ];
+var coins = [];
 var TILE_X = 38;
 var TILE_Y = 16;
 
@@ -73,9 +74,12 @@ function create() {
 
     coinGroup = game.add.group();   
     coinGroup.enableBody = true;
-    coins.forEach(function(c) {
+    var i = 0;
+    coinCoords.forEach(function(c) {
         coin = coinGroup.create((1216/TILE_X)*c[0], (512/TILE_Y)*c[1], 'coin');
         coin.body.allowGravity = false;
+        coins[i] = coin;
+        ++i;
     })
     coinGroup.callAll('animations.add', 'animations', 'spin', [0, 1, 2, 3, 4, 5], 10, true);  
     coinGroup.callAll('animations.play', 'animations', 'spin');
