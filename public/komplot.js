@@ -6,7 +6,7 @@ function preload() {
 
     game.load.tilemap('test', 'level1.json', null, Phaser.Tilemap.TILED_JSON);
     game.load.image('tiles', 'my_assets/tileset2.png');
-    game.load.spritesheet('coin', 'assets/sprites/coin.png', 32, 32);
+    game.load.spritesheet('coin', 'my_assets/coin.png', 32, 32);
     game.load.image('player', 'my_assets/player.png');
 
 }
@@ -85,7 +85,7 @@ function create() {
         coins[i] = coin;
         ++i;
     });
-    coinGroup.callAll('animations.add', 'animations', 'spin', [0, 1, 2, 3, 4, 5], 10, true);
+    coinGroup.callAll('animations.add', 'animations', 'spin', [0, 1, 2, 3, 4, 5, 6], 10, true);
     coinGroup.callAll('animations.play', 'animations', 'spin');
 
     player = game.add.sprite(32, 32, 'player');
