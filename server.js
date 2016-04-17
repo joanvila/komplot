@@ -14,6 +14,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 // initialization variables
 var coinsUsers = [];
 var eatenCoins = 0;
+var eatenCoinsArray = [];
 var gameInProgress = false;
 
 // socket.io connections
@@ -23,20 +24,25 @@ io.on('connection', function(socket) {
 	socket.on('eatcoin', function(data) {
 		coinsUsers[data.player]++;
 		eatenCoins++;
+		eatenCoinsArray.push(data.coin);
 		io.emit('eatcoin', data.coin);
 
-		if (eatenCoins >= 59) {
+		if (eatenCoins === 59) {
 			io.emit('endgame', coinsUsers);
 			gameInProgress = false;
 			eatencoins = 0;
 			coinsUsers = [];
+			eatenCoinsArray = [];
 		}
 	});
 
 	socket.on('getid', function(msg){
 		var n = coinsUsers.length;
 		coinsUsers.push(0);
-    	io.emit('getid', n.toString());
+    	io.emit('getid', {
+			userId: n.toString(),
+			eatenCoinsArray: eatenCoinsArray
+		});
 		if (n === 0) {
 			eatenCoins = 0;
 			gameInProgress = true;
