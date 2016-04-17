@@ -12,7 +12,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 //app.use(express.static('public'));
 
 // initialization variables
-var coinsUsers = [];
+var users = [];
 var eatenCoins = 0;
 var eatenCoinsArray = [];
 var gameInProgress = false;
@@ -22,23 +22,24 @@ io.on('connection', function(socket) {
 	console.log('user connected');
 
 	socket.on('eatcoin', function(data) {
-		coinsUsers[data.player]++;
+		users[data.player]+=10;
 		eatenCoins++;
 		eatenCoinsArray.push(data.coin);
 		io.emit('eatcoin', data.coin);
+		io.emmit('SyncScore', users);
 
 		if (eatenCoins === 59) {
-			io.emit('endgame', coinsUsers);
+			io.emit('endgame', users);
 			gameInProgress = false;
 			eatencoins = 0;
-			coinsUsers = [];
+			users = [];
 			eatenCoinsArray = [];
 		}
 	});
 
 	socket.on('getid', function(msg){
-		var n = coinsUsers.length;
-		coinsUsers.push(0);
+		var n = users.length;
+		users.push(0);
     	io.emit('getid', {
 			userId: n.toString(),
 			eatenCoinsArray: eatenCoinsArray

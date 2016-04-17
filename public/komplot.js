@@ -1,6 +1,6 @@
 var game = new Phaser.Game(1316, 512, Phaser.AUTO, 'phaser-example', { preload: preload, create: create, update:update, render:render });
 
-var socket = io('http://10.105.112.18:3000');
+var socket = io('http://10.105.112.212:3000');
 
 function preload() {
 
@@ -56,7 +56,7 @@ function create() {
     socket.on('endgame', function(puntuations){
         console.log(puntuations);
     });
-    socket.on('SyncPoints', function(puntuations) {
+    socket.on('SyncScore', function(puntuations) {
         var j = 0;
         var y_ini = 30;
         puntuations.forEach(function(p) {
