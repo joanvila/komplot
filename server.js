@@ -26,9 +26,10 @@ io.on('connection', function(socket) {
 		eatenCoins++;
 		eatenCoinsArray.push(data.coin);
 		io.emit('eatcoin', data.coin);
-		io.emmit('SyncScore', users);
+		io.emit('SyncScore', users);
 
-		if (eatenCoins === 59) {
+		if (eatenCoins === 61) {
+			console.log('endgame');
 			io.emit('endgame', users);
 			gameInProgress = false;
 			eatencoins = 0;
@@ -51,7 +52,7 @@ io.on('connection', function(socket) {
   	});
 
 	socket.on('disconnect', function (userId) {
-		users[userId] = null;
+		users[userId] = -1;
     	console.log('user disconnected');
   	});
 });
