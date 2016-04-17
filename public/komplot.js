@@ -1,4 +1,4 @@
-var game = new Phaser.Game(1316, 512, Phaser.AUTO, 'phaser-example', { preload: preload, create: create, update:update, render:render });
+var game = new Phaser.Game(1416, 512, Phaser.AUTO, 'phaser-example', { preload: preload, create: create, update:update, render:render });
 
 var socket = io('http://10.105.112.212:3000');
 
@@ -62,9 +62,9 @@ function create() {
         puntuations.forEach(function(p) {
             if (text[j] === undefined) {
                 if (j === userId) {
-                    text[j] = game.add.text(1225, y_ini + j*30, "Player " + j + ":" + p + " p", {font: "20px Arial", fill: "#aaaaaa", stroke: "#535353", strokeThickness: 15});
+                    text[j] = game.add.text(1190, y_ini + j*30, "Player " + j + "  " + p + " p", {font: "20px Arial", fill: "#aaaaaa", stroke: "#535353", strokeThickness: 15});
                 }
-                else text[j] = game.add.text(1225, y_ini + j*30, "Player " + j + ":" + p + " p", {font: "20px Arial", fill: "#ffffff", stroke: "#535353", strokeThickness: 15});
+                else text[j] = game.add.text(1190, y_ini + j*30, "Player " + j + "  " + p + " p", {font: "20px Arial", fill: "#ffffff", stroke: "#535353", strokeThickness: 15});
                 text.anchor.setTo(0.5, 0);
                 text.align = 'center';
             } else {
