@@ -26,7 +26,7 @@ io.on('connection', function(socket) {
 		eatenCoins++;
 		eatenCoinsArray.push(data.coin);
 		io.emit('eatcoin', data.coin);
-		io.emmit('SyncScore', users);
+		io.emit('SyncScore', users);
 
 		if (eatenCoins === 59) {
 			io.emit('endgame', users);
