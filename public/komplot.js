@@ -41,7 +41,7 @@ function create() {
 
     socket.emit('getid', '');
     socket.on('getid', function(result){
-        userId = result.userId;
+        userId = parseInt(result.userId);
         var eatenCoinsArray = result.eatenCoinsArray;
         console.log(eatenCoinsArray);
         for (var i = 0; i < eatenCoinsArray.length; ++i) {
@@ -68,7 +68,7 @@ function create() {
                 text.anchor.setTo(0.5, 0);
                 text.align = 'center';
             } else {
-                text[j].text = "Player " + j + ":" + p + " p";
+                text[j].text = "Player " + j + "  " + p + " p";
             }
 
             ++j;
