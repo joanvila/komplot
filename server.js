@@ -24,9 +24,16 @@ var gameInProgress = false;
 // socket.io connections
 io.on('connection', function(socket) {
 	console.log('user connected');
-	socket.on('coin', function(data) {
-		console.log(data);
+	socket.on('eatcoin', function(data) {
+		coinsUsers[data.player]++;
+		io.emit('eatcoin', data.coin);
 	});
+	socket.on('getid', function(msg){
+		var n = coinsUsers.length;
+		coinsUsers.push(0);
+    	io.emit('getid', n.toString());
+		gameInProgress = true;
+  	});
 });
 
 
@@ -52,7 +59,7 @@ app.post('/addCoins/:userId', function(req, res, next) {
 	var coinPositoin = req.body.position;
 	console.log(coinPosition); // TODO: Validate this
 	coinsUsers[userId]++;
-	res.sendStatus(200); 
+	res.sendStatus(200);
 });
 
 

@@ -1,11 +1,13 @@
 var game = new Phaser.Game(1152+64, 448+64, Phaser.AUTO, 'phaser-example', { preload: preload, create: create, update:update, render:render });
 
+var socket = io('http://localhost:3000');
+
 function preload() {
 
     game.load.tilemap('test', 'level1.json', null, Phaser.Tilemap.TILED_JSON);
     game.load.image('tiles', 'my_assets/tileset2.png');
     game.load.spritesheet('coin', 'assets/sprites/coin.png', 32, 32);
-    game.load.image('player', 'my_assets/player.png'); 
+    game.load.image('player', 'my_assets/player.png');
 
 }
 
@@ -16,8 +18,15 @@ var cursors;
 var facing = 'left';
 var jumpTimer = 0;
 var coinGroup;
+var userId;
 
 function create() {
+
+    socket.emit('getid', '');
+    socket.on('getid', function(result){
+        userId = result;
+        console.log('user id' + userId);
+  });
 
     game.physics.startSystem(Phaser.Physics.ARCADE);
 
@@ -31,7 +40,7 @@ function create() {
     //  The first parameter is the tileset name, as specified in the Tiled map editor (and in the tilemap json file)
     //  The second parameter maps this name to the Phaser.Cache key 'tiles'
     map.addTilesetImage('tiles', 'tiles');
-    
+
 
 
 
@@ -43,7 +52,7 @@ function create() {
             map.setCollision(i);
         }
     }
-    
+
     //  Creates a layer from the World1 layer in the map data.
     //  A Layer is effectively like a Phaser.player, so is added to the display list.
     layer = map.createLayer('Tile Layer 1');
@@ -53,11 +62,11 @@ function create() {
     //  This resizes the game world to match the layer dimensions
     layer.resizeWorld();
 
-    coinGroup = game.add.group();   
-    coinGroup.enableBody = true;     
+    coinGroup = game.add.group();
+    coinGroup.enableBody = true;
     coinGroup.create(100, 100, 'coin');
-    //map.createFromObjects('Tile Layer 1', 50, 'coin', 0, true, false, coinGroup);      
-    coinGroup.callAll('animations.add', 'animations', 'spin', [0, 1, 2, 3, 4, 5], 10, true);  
+    //map.createFromObjects('Tile Layer 1', 50, 'coin', 0, true, false, coinGroup);
+    coinGroup.callAll('animations.add', 'animations', 'spin', [0, 1, 2, 3, 4, 5], 10, true);
     coinGroup.callAll('animations.play', 'animations', 'spin');
 
     player = game.add.sprite(32, 32, 'player');
@@ -80,8 +89,8 @@ var jumps = 0;
 function update() {
 
     game.physics.arcade.collide(player, layer);
-    game.physics.arcade.collide(coinGroup, layer); 
-    game.physics.arcade.overlap(player, coinGroup, collectCoin, null, this); 
+    game.physics.arcade.collide(coinGroup, layer);
+    game.physics.arcade.overlap(player, coinGroup, collectCoin, null, this);
 
     if (player.body.velocity.x > 0) {
         player.body.velocity.x /= 1.05;
@@ -115,7 +124,7 @@ function update() {
             facing = 'right';
         }*/
     }
-    
+
     if (jumpButton.isDown && player.body.onFloor())
     {
         player.body.velocity.y = -250;
@@ -140,7 +149,12 @@ function render () {
 }
 
 function collectCoin(player, coin) {
-
+    if (coin.visible) {
+        socket.emit('eatcoin', {
+            player: userId,
+            coin: 0
+        });
+    }
     coin.kill();
 
 }
