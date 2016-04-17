@@ -1,6 +1,6 @@
 var game = new Phaser.Game(1216, 512, Phaser.AUTO, 'phaser-example', { preload: preload, create: create, update:update, render:render });
 
-var socket = io('http://localhost:3000');
+var socket = io('http://10.105.112.18:3000');
 
 function preload() {
 
@@ -41,8 +41,12 @@ function create() {
     socket.emit('getid', '');
     socket.on('getid', function(result){
         userId = result;
-        console.log('user id' + userId);
-  });
+        console.log('user id ' + userId);
+    });
+    socket.on('eatcoin', function(eatenCoinId){
+        var coin = coins[eatenCoinId];
+        coin.kill();
+    });
 
     game.physics.startSystem(Phaser.Physics.ARCADE);
 
@@ -167,11 +171,11 @@ function render () {
 }
 
 function collectCoin(player, coin) {
-    console.log(coin);
+    var coinId = coins.indexOf(coin);
     if (coin.visible) {
         socket.emit('eatcoin', {
             player: userId,
-            coin: 0
+            coin: coinId
         });
     }
     coin.kill();
