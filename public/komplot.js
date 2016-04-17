@@ -60,7 +60,7 @@ function create() {
         var j = 0;
         var y_ini = 30;
         puntuations.forEach(function(p) {
-            if (text[j] === null) return;
+            if (parseInt(text[j]) === -1) return;
             if (text[j] === undefined) {
                 if (j === userId) {
                     text[j] = game.add.text(1190, y_ini + j*30, "Player " + j + "  " + p + " p", {font: "20px Arial", fill: "#7997a1", stroke: "#535353", strokeThickness: 15});
