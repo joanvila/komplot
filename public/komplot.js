@@ -72,7 +72,7 @@ function create() {
     //  This resizes the game world to match the layer dimensions
     layer.resizeWorld();
 
-    coinGroup = game.add.group();   
+    coinGroup = game.add.group();
     coinGroup.enableBody = true;
     var i = 0;
     coinCoords.forEach(function(c) {
@@ -80,8 +80,8 @@ function create() {
         coin.body.allowGravity = false;
         coins[i] = coin;
         ++i;
-    })
-    coinGroup.callAll('animations.add', 'animations', 'spin', [0, 1, 2, 3, 4, 5], 10, true);  
+    });
+    coinGroup.callAll('animations.add', 'animations', 'spin', [0, 1, 2, 3, 4, 5], 10, true);
     coinGroup.callAll('animations.play', 'animations', 'spin');
 
     player = game.add.sprite(32, 32, 'player');
@@ -167,6 +167,7 @@ function render () {
 }
 
 function collectCoin(player, coin) {
+    console.log(coin);
     if (coin.visible) {
         socket.emit('eatcoin', {
             player: userId,
