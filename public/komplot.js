@@ -41,7 +41,7 @@ function create() {
 
     socket.emit('getid', '');
     socket.on('getid', function(result){
-        userId = result.userId;
+        if (!userId) userId = result.userId;
         var eatenCoinsArray = result.eatenCoinsArray;
         console.log(eatenCoinsArray);
         for (var i = 0; i < eatenCoinsArray.length; ++i) {
