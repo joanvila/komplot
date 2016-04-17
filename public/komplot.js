@@ -55,6 +55,7 @@ function create() {
     });
     socket.on('endgame', function(puntuations){
         console.log(puntuations);
+        location.reload();
     });
     socket.on('SyncScore', function(puntuations) {
         var j = 0;

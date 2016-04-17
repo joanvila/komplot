@@ -28,7 +28,8 @@ io.on('connection', function(socket) {
 		io.emit('eatcoin', data.coin);
 		io.emit('SyncScore', users);
 
-		if (eatenCoins === 59) {
+		if (eatenCoins === 61) {
+			console.log('endgame');
 			io.emit('endgame', users);
 			gameInProgress = false;
 			eatencoins = 0;
