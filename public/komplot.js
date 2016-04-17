@@ -1,6 +1,6 @@
 var game = new Phaser.Game(1216, 512, Phaser.AUTO, 'phaser-example', { preload: preload, create: create, update:update, render:render });
 
-var socket = io('http://localhost:3000');
+var socket = io('http://10.105.112.18:3000');
 
 function preload() {
 
@@ -41,8 +41,12 @@ function create() {
     socket.emit('getid', '');
     socket.on('getid', function(result){
         userId = result;
-        console.log('user id' + userId);
-  });
+        console.log('user id ' + userId);
+    });
+    socket.on('eatcoin', function(eatenCoinId){
+        var coin = coins[eatenCoinId];
+        coin.kill();
+    });
 
     game.physics.startSystem(Phaser.Physics.ARCADE);
 
@@ -72,7 +76,7 @@ function create() {
     //  This resizes the game world to match the layer dimensions
     layer.resizeWorld();
 
-    coinGroup = game.add.group();   
+    coinGroup = game.add.group();
     coinGroup.enableBody = true;
     var i = 0;
     coinCoords.forEach(function(c) {
@@ -80,8 +84,8 @@ function create() {
         coin.body.allowGravity = false;
         coins[i] = coin;
         ++i;
-    })
-    coinGroup.callAll('animations.add', 'animations', 'spin', [0, 1, 2, 3, 4, 5], 10, true);  
+    });
+    coinGroup.callAll('animations.add', 'animations', 'spin', [0, 1, 2, 3, 4, 5], 10, true);
     coinGroup.callAll('animations.play', 'animations', 'spin');
 
     player = game.add.sprite(32, 32, 'player');
@@ -167,10 +171,11 @@ function render () {
 }
 
 function collectCoin(player, coin) {
+    var coinId = coins.indexOf(coin);
     if (coin.visible) {
         socket.emit('eatcoin', {
             player: userId,
-            coin: 0
+            coin: coinId
         });
     }
     coin.kill();
