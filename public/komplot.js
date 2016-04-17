@@ -49,6 +49,9 @@ function create() {
         var coin = coins[eatenCoinId];
         coin.kill();
     });
+    socket.on('endgame', function(puntuations){
+        console.log(puntuations);
+    });
 
 
     game.physics.startSystem(Phaser.Physics.ARCADE);
