@@ -41,7 +41,11 @@ function create() {
 
     socket.emit('getid', '');
     socket.on('getid', function(result){
+<<<<<<< HEAD
         userId = parseInt(result.userId);
+=======
+        if (!userId) userId = result.userId;
+>>>>>>> 4d19e6a47792d662f8aa6b7811c44aa6b1e21666
         var eatenCoinsArray = result.eatenCoinsArray;
         console.log(eatenCoinsArray);
         for (var i = 0; i < eatenCoinsArray.length; ++i) {
