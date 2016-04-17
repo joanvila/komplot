@@ -51,8 +51,8 @@ io.on('connection', function(socket) {
   	});
 
 	socket.on('disconnect', function (userId) {
-		users.splice(userId, 1);
-    	io.emit('user disconnected');
+		users[userId] = null;
+    	console.log('user disconnected');
   	});
 });
 
