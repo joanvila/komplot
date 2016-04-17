@@ -51,7 +51,7 @@ io.on('connection', function(socket) {
   	});
 
 	socket.on('disconnect', function (userId) {
-		users[userId] = null;
+		users[userId] = -1;
     	console.log('user disconnected');
   	});
 });
