@@ -67,7 +67,7 @@ function create() {
                     text[j] = game.add.text(1190, y_ini + j*30, "Player " + j + "  " + p + " p", {font: "20px Arial", fill: "#7997a1", stroke: "#535353", strokeThickness: 15});
                 }
                 else text[j] = game.add.text(1190, y_ini + j*30, "Player " + j + "  " + p + " p", {font: "20px Arial", fill: "#ffffff", stroke: "#535353", strokeThickness: 15});
-                text.anchor.setTo(0.5, 0);
+                text.anchor.set(0.5, 0);
                 text.align = 'center';
             } else {
                 text[j].text = "Player " + j + "  " + p + " p";
