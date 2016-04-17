@@ -36,7 +36,6 @@ var coins = [];
 var TILE_X = 38;
 var TILE_Y = 16;
 var text = [];
-var score = [];
 
 function create() {
 
@@ -53,7 +52,22 @@ function create() {
         console.log(puntuations);
     });
     socket.on('SyncPoints', function(puntuations) {
-        
+        var j = 0;
+        var y_ini = 30;
+        puntuations.forEach(function(p) {
+            if (text[j] === undefined) {
+                if (j === userId) {
+                    text[j] = game.add.text(1225, y_ini + j*30, "Player " + j + ":" + p + " p", {font: "20px Arial", fill: "#aaaaaa", stroke: "#535353", strokeThickness: 15});
+                }
+                else text[j] = game.add.text(1225, y_ini + j*30, "Player " + j + ":" + p + " p", {font: "20px Arial", fill: "#ffffff", stroke: "#535353", strokeThickness: 15});
+                text.anchor.setTo(0.5, 0);
+                text.align = 'center';
+            } else {
+                text[j].text = "Player " + j + ":" + p + " p";
+            }
+
+            ++j;
+        });
     });
 
 
@@ -108,9 +122,9 @@ function create() {
 
     game.camera.follow(player);
 
-    text = game.add.text(1225, 30, score + " p", {font: "20px Arial", fill: "#ffffff", stroke: "#535353", strokeThickness: 15});
+    /*text = game.add.text(1225, 30, score + " p", {font: "20px Arial", fill: "#ffffff", stroke: "#535353", strokeThickness: 15});
     text.anchor.setTo(0.5, 0);
-    text.align = 'center';
+    text.align = 'center';*/
 
     cursors = game.input.keyboard.createCursorKeys();
     jumpButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
@@ -172,7 +186,7 @@ function update() {
 
 
 function render () {
-    text.text = score + ' p';
+    //text.text = score + ' p';
     //game.debug.text(game.time.suggestedFps, 32, 32);
 
     // game.debug.text(game.time.physicsElapsed, 32, 32);
@@ -183,7 +197,6 @@ function render () {
 }
 
 function collectCoin(player, coin) {
-    score += 10;
     var coinId = coins.indexOf(coin);
     if (coin.visible) {
         socket.emit('eatcoin', {
