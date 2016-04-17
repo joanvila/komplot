@@ -41,11 +41,7 @@ function create() {
 
     socket.emit('getid', '');
     socket.on('getid', function(result){
-<<<<<<< HEAD
-        userId = parseInt(result.userId);
-=======
-        if (!userId) userId = result.userId;
->>>>>>> 4d19e6a47792d662f8aa6b7811c44aa6b1e21666
+        if (!userId) userId = parseInt(result.userId);
         var eatenCoinsArray = result.eatenCoinsArray;
         console.log(eatenCoinsArray);
         for (var i = 0; i < eatenCoinsArray.length; ++i) {
@@ -66,7 +62,7 @@ function create() {
         puntuations.forEach(function(p) {
             if (text[j] === undefined) {
                 if (j === userId) {
-                    text[j] = game.add.text(1190, y_ini + j*30, "Player " + j + "  " + p + " p", {font: "20px Arial", fill: "#aaaaaa", stroke: "#535353", strokeThickness: 15});
+                    text[j] = game.add.text(1190, y_ini + j*30, "Player " + j + "  " + p + " p", {font: "20px Arial", fill: "#7997a1", stroke: "#535353", strokeThickness: 15});
                 }
                 else text[j] = game.add.text(1190, y_ini + j*30, "Player " + j + "  " + p + " p", {font: "20px Arial", fill: "#ffffff", stroke: "#535353", strokeThickness: 15});
                 text.anchor.setTo(0.5, 0);
