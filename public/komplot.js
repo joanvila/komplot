@@ -1,4 +1,4 @@
-var game = new Phaser.Game(1216, 512, Phaser.AUTO, 'phaser-example', { preload: preload, create: create, update:update, render:render });
+var game = new Phaser.Game(1316, 512, Phaser.AUTO, 'phaser-example', { preload: preload, create: create, update:update, render:render });
 
 var socket = io('http://10.105.112.18:3000');
 
@@ -35,6 +35,8 @@ var coinCoords = [
 var coins = [];
 var TILE_X = 38;
 var TILE_Y = 16;
+var text = [];
+var score = [];
 
 function create() {
 
@@ -47,6 +49,7 @@ function create() {
         var coin = coins[eatenCoinId];
         coin.kill();
     });
+
 
     game.physics.startSystem(Phaser.Physics.ARCADE);
 
@@ -99,6 +102,10 @@ function create() {
 
     game.camera.follow(player);
 
+    text = game.add.text(1225, 30, score + " p", {font: "20px Arial", fill: "#ffffff", stroke: "#535353", strokeThickness: 15});
+    text.anchor.setTo(0.5, 0);
+    text.align = 'center';
+
     cursors = game.input.keyboard.createCursorKeys();
     jumpButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 
@@ -108,7 +115,6 @@ function create() {
 var jumps = 0;
 
 function update() {
-
     game.physics.arcade.collide(player, layer);
     game.physics.arcade.collide(coinGroup, layer);
     game.physics.arcade.overlap(player, coinGroup, collectCoin, null, this);
@@ -160,7 +166,7 @@ function update() {
 
 
 function render () {
-
+    text.text = score + ' p';
     //game.debug.text(game.time.suggestedFps, 32, 32);
 
     // game.debug.text(game.time.physicsElapsed, 32, 32);
@@ -171,6 +177,7 @@ function render () {
 }
 
 function collectCoin(player, coin) {
+    score += 10;
     var coinId = coins.indexOf(coin);
     if (coin.visible) {
         socket.emit('eatcoin', {
