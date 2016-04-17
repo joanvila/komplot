@@ -57,7 +57,7 @@ function create() {
     map.addTilesetImage('tiles', 'tiles');
 
     for (var i = 0; i < 61; ++i) {
-        if (/*i !== 28 && */i !== 27) {
+        if (i !== 28 && i !== 27) {
             map.setCollision(i);
         }
     }
@@ -66,7 +66,7 @@ function create() {
     //  A Layer is effectively like a Phaser.player, so is added to the display list.
     layer = map.createLayer('Tile Layer 1');
 
-    layer.debug = true;
+    //layer.debug = true;
 
     //  This resizes the game world to match the layer dimensions
     layer.resizeWorld();
