@@ -60,6 +60,7 @@ function create() {
         var j = 0;
         var y_ini = 30;
         puntuations.forEach(function(p) {
+            if (text[j] === null) return;
             if (text[j] === undefined) {
                 if (j === userId) {
                     text[j] = game.add.text(1190, y_ini + j*30, "Player " + j + "  " + p + " p", {font: "20px Arial", fill: "#7997a1", stroke: "#535353", strokeThickness: 15});
@@ -80,7 +81,7 @@ function create() {
 
     game.stage.backgroundColor = '#ffffff';
     game.time.desiredFps = 30;
-    game.physics.arcade.gravity.y = 250;
+    game.physics.arcade.gravity.y = 350;
 
     //  The 'mario' key here is the Loader key given in game.load.tilemap
     map = game.add.tilemap('test');
