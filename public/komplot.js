@@ -213,3 +213,8 @@ function collectCoin(player, coin) {
     coin.kill();
 
 }
+
+window.onbeforeunload = function(event) {
+    socket.emit('disconnect', userId);
+    return null;
+};

@@ -50,8 +50,9 @@ io.on('connection', function(socket) {
 		}
   	});
 
-	socket.on('disconnect', function () {
-    	io.emit('user disconnected');
+	socket.on('disconnect', function (userId) {
+		users[userId] = null;
+    	console.log('user disconnected');
   	});
 });
 
