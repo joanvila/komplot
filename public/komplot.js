@@ -52,6 +52,9 @@ function create() {
     socket.on('endgame', function(puntuations){
         console.log(puntuations);
     });
+    socket.on('SyncPoints', function(puntuations) {
+        
+    });
 
 
     game.physics.startSystem(Phaser.Physics.ARCADE);
